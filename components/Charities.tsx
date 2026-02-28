@@ -6,14 +6,14 @@ import Image from "next/image";
 import { charities } from "@/lib/charities";
 import AnimatedCounter from "./AnimatedCounter";
 
-const focusColors: Record<string, string> = {
-  "Emergency Relief": "text-red border-red/30",
-  "Medical Aid": "text-amber border-amber/30",
-  "Refugee Support": "text-cyan border-cyan/30",
-  "Children's Aid": "text-purple-400 border-purple-400/30",
-  "Crisis Response": "text-orange-400 border-orange-400/30",
-  "Medical Supplies": "text-green border-green/30",
-  Healthcare: "text-cyan border-cyan/30",
+const focusBadge: Record<string, string> = {
+  "Emergency Relief": "bg-red-50 text-red-600 border-red-100",
+  "Medical Aid":      "bg-amber-light text-amber border-amber/20",
+  "Refugee Support":  "bg-sky-light text-sky border-sky/20",
+  "Children's Aid":   "bg-purple-50 text-purple-600 border-purple-100",
+  "Crisis Response":  "bg-orange-50 text-orange-600 border-orange-100",
+  "Medical Supplies": "bg-sage-light text-sage border-sage/20",
+  Healthcare:         "bg-teal-50 text-teal-600 border-teal-100",
 };
 
 export default function Charities() {
@@ -21,28 +21,27 @@ export default function Charities() {
   const isInView = useInView(ref, { once: true, margin: "-50px" });
 
   return (
-    <section id="charities" className="py-28 px-4 relative" ref={ref}>
+    <section id="charities" className="py-28 px-4" ref={ref}>
+      <div className="section-divider mb-28" />
       <div className="max-w-7xl mx-auto">
-        {/* Section header */}
+        {/* Header */}
         <motion.div
-          initial={{ opacity: 0, x: -30 }}
-          animate={isInView ? { opacity: 1, x: 0 } : {}}
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="mb-16"
+          className="text-center mb-16"
         >
-          <div className="flex items-center gap-4 mb-4">
-            <div className="h-px flex-1 max-w-[60px] bg-red" />
-            <span className="font-mono text-xs text-red tracking-widest">DOSSIERS</span>
-          </div>
-          <h2 className="text-4xl sm:text-5xl font-bold font-mono tracking-tighter">
-            THE <span className="text-red text-glow-red">CHARITIES</span>
+          <p className="text-sm font-medium text-sage uppercase tracking-widest mb-3">Aid Recipients</p>
+          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
+            Trusted humanitarian partners
           </h2>
-          <p className="text-muted font-mono text-sm mt-3 max-w-lg">
-            &gt; Every cent from creator fees goes to these verified organizations on the front lines.
+          <p className="text-muted max-w-xl mx-auto text-base">
+            Every cent from creator fees flows directly to these verified organizations working on the front lines.
           </p>
         </motion.div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        {/* Cards */}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {charities.map((charity, i) => (
             <motion.a
               key={charity.shortName}
@@ -51,99 +50,75 @@ export default function Charities() {
               rel="noopener noreferrer"
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-              className="group relative bg-card border border-card-border overflow-hidden hover:border-red/40 transition-all"
-              style={{ clipPath: "polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px))" }}
+              transition={{ duration: 0.5, delay: i * 0.08 }}
+              className="group bg-card rounded-2xl border border-card-border p-6 card-hover shadow-sm flex flex-col"
             >
-              {/* CLASSIFIED watermark */}
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.03] group-hover:opacity-0 transition-opacity">
-                <span className="font-mono text-6xl font-bold text-red -rotate-12 select-none">
-                  CLASSIFIED
+              {/* Logo + status */}
+              <div className="flex items-start justify-between mb-4">
+                <div className="w-12 h-12 rounded-xl bg-subtle border border-card-border flex items-center justify-center overflow-hidden group-hover:border-sky/30 transition-colors">
+                  <Image
+                    src={charity.logo}
+                    alt={charity.shortName}
+                    width={32}
+                    height={32}
+                    className="object-contain"
+                    unoptimized
+                  />
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-sage pulse-dot" />
+                  <span className="text-xs text-sage font-medium">Active</span>
+                </div>
+              </div>
+
+              {/* Focus badge */}
+              <div className="mb-3">
+                <span className={`inline-block text-xs font-medium px-2.5 py-0.5 rounded-full border ${focusBadge[charity.focus] ?? "bg-sky-light text-sky border-sky/20"}`}>
+                  {charity.focus}
                 </span>
               </div>
 
-              <div className="relative p-6">
-                {/* Top row: logo + status */}
-                <div className="flex items-start justify-between mb-4">
-                  <div className="w-12 h-12 rounded bg-white/5 border border-card-border flex items-center justify-center overflow-hidden group-hover:border-red/30 transition-colors">
-                    <Image
-                      src={charity.logo}
-                      alt={charity.shortName}
-                      width={32}
-                      height={32}
-                      className="object-contain"
-                      unoptimized
-                    />
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <span className="w-2 h-2 bg-green rounded-full pulse-dot" />
-                    <span className="font-mono text-[10px] text-green tracking-wider">ACTIVE</span>
+              {/* Name + description */}
+              <h3 className="font-semibold text-sm mb-2 group-hover:text-sky transition-colors">
+                {charity.name}
+              </h3>
+              <p className="text-muted text-xs leading-relaxed mb-5 flex-1 line-clamp-3">
+                {charity.description}
+              </p>
+
+              {/* Raised */}
+              <div className="pt-4 border-t border-card-border flex items-center justify-between">
+                <div>
+                  <div className="text-[10px] text-muted uppercase tracking-wider mb-0.5">Raised</div>
+                  <div className="font-bold text-sage text-base">
+                    <AnimatedCounter target={charity.raised} prefix="$" duration={2 + i * 0.15} />
                   </div>
                 </div>
-
-                {/* Focus tag */}
-                <div className="mb-3">
-                  <span className={`inline-block text-[10px] font-mono font-bold px-2 py-0.5 border tracking-wider ${focusColors[charity.focus] || "text-red border-red/30"}`}>
-                    {charity.focus.toUpperCase()}
+                {charity.acceptsCrypto && (
+                  <span className="inline-flex items-center gap-1 text-xs text-sage font-medium">
+                    <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    Crypto
                   </span>
-                </div>
-
-                {/* Name */}
-                <h3 className="font-mono font-bold text-sm mb-2 group-hover:text-red transition-colors tracking-tight">
-                  {charity.name}
-                </h3>
-
-                {/* Description */}
-                <p className="text-muted text-xs leading-relaxed mb-5 line-clamp-3">
-                  {charity.description}
-                </p>
-
-                {/* Raised amount */}
-                <div className="border-t border-card-border pt-4">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <div className="text-[10px] font-mono text-muted tracking-wider mb-1">RAISED</div>
-                      <div className="font-mono font-bold text-amber text-glow-amber text-lg">
-                        <AnimatedCounter target={charity.raised} prefix="$" duration={2 + i * 0.2} />
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      {charity.acceptsCrypto && (
-                        <span className="inline-flex items-center gap-1 text-[10px] font-mono text-green">
-                          <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                          </svg>
-                          CRYPTO
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Hover arrow */}
-                <div className="absolute top-6 right-6 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <svg className="w-4 h-4 text-red" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                  </svg>
-                </div>
+                )}
               </div>
             </motion.a>
           ))}
         </div>
 
-        {/* Total raised bar */}
+        {/* Total raised */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 1 }}
-          className="mt-12 bg-card border border-card-border p-6 flex flex-col sm:flex-row items-center justify-between gap-4"
-          style={{ clipPath: "polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px))" }}
+          transition={{ duration: 0.6, delay: 0.9 }}
+          className="mt-10 bg-gradient-to-r from-sky-light via-sage-light/50 to-amber-light/30 rounded-2xl p-8 border border-sky/10 flex flex-col sm:flex-row items-center justify-between gap-4"
         >
-          <div className="flex items-center gap-3">
-            <span className="w-3 h-3 bg-red rounded-full pulse-dot" />
-            <span className="font-mono text-sm text-muted tracking-wider">TOTAL DISTRIBUTED TO CHARITIES</span>
+          <div>
+            <p className="text-sm font-medium text-muted mb-1">Total distributed to all charities</p>
+            <p className="text-xs text-muted/70">Updated in real-time as donations are made on-chain</p>
           </div>
-          <div className="font-mono font-bold text-2xl sm:text-3xl text-amber text-glow-amber">
+          <div className="text-3xl sm:text-4xl font-bold text-foreground">
             <AnimatedCounter target={74900} prefix="$" duration={2.5} />
           </div>
         </motion.div>
