@@ -3,9 +3,11 @@
 import { motion } from "framer-motion";
 import AnimatedCounter from "./AnimatedCounter";
 
+const TOTAL_DONATED = 74900;
+
 export default function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
+    <section id="hero-section" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
       <div className="relative z-10 max-w-5xl mx-auto px-4 text-center">
 
         {/* Badge */}
@@ -28,21 +30,14 @@ export default function Hero() {
         >
           <div className="animate-float">
             <svg width="120" height="100" viewBox="0 0 120 100" fill="none" className="drop-shadow-md">
-              {/* Body */}
               <ellipse cx="58" cy="55" rx="28" ry="18" fill="#e0f2fe" stroke="#7dd3fc" strokeWidth="1.5" />
-              {/* Wing */}
               <path d="M30 48 Q15 30 40 38 Q20 42 35 52Z" fill="#bae6fd" stroke="#7dd3fc" strokeWidth="1" />
               <path d="M86 48 Q101 30 76 38 Q96 42 81 52Z" fill="#bae6fd" stroke="#7dd3fc" strokeWidth="1" />
-              {/* Head */}
               <circle cx="82" cy="44" r="12" fill="#e0f2fe" stroke="#7dd3fc" strokeWidth="1.5" />
-              {/* Eye */}
               <circle cx="85" cy="42" r="2" fill="#0ea5e9" />
               <circle cx="85.8" cy="41.2" r="0.6" fill="white" />
-              {/* Beak */}
               <path d="M92 44 L98 46 L92 48Z" fill="#f59e0b" />
-              {/* Tail */}
               <path d="M32 58 Q20 65 28 70 Q22 62 36 62Z" fill="#bae6fd" stroke="#7dd3fc" strokeWidth="1" />
-              {/* Olive branch */}
               <path d="M95 50 Q100 55 98 62" stroke="#10b981" strokeWidth="2" strokeLinecap="round" />
               <ellipse cx="98" cy="54" rx="4" ry="2.5" fill="#6ee7b7" transform="rotate(30 98 54)" />
               <ellipse cx="99" cy="59" rx="3.5" ry="2" fill="#6ee7b7" transform="rotate(-20 99 59)" />
@@ -82,7 +77,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.5 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20"
+          className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16"
         >
           <a
             href="#token"
@@ -98,26 +93,41 @@ export default function Hero() {
           </a>
         </motion.div>
 
-        {/* Stats */}
+        {/* Big donation total */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.65 }}
+          className="mb-10"
+        >
+          <div className="inline-block bg-gradient-to-br from-sage-light/80 to-sky-light/60 border border-sage/20 rounded-3xl px-10 py-8 shadow-sm">
+            <p className="text-sm font-medium text-muted uppercase tracking-widest mb-3">
+              Total Donated to Charities
+            </p>
+            <div className="text-6xl sm:text-7xl md:text-8xl font-bold text-foreground leading-none">
+              <AnimatedCounter target={TOTAL_DONATED} prefix="$" duration={2.2} />
+            </div>
+            <div className="flex items-center justify-center gap-2 mt-3">
+              <span className="w-2 h-2 rounded-full bg-sage pulse-dot" />
+              <span className="text-xs text-sage font-medium">Live — updated on-chain</span>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Supporting stats */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.7 }}
-          className="grid grid-cols-3 gap-6 max-w-lg mx-auto"
+          transition={{ duration: 0.6, delay: 0.8 }}
+          className="grid grid-cols-2 gap-4 max-w-xs mx-auto"
         >
           {[
-            { value: 8, suffix: "", label: "Charities" },
+            { value: 8, suffix: "", label: "Charities Supported" },
             { value: 100, suffix: "%", label: "Fees Donated", color: "text-sky" },
-            { value: 74900, prefix: "$", label: "Total Raised", color: "text-sage" },
           ].map((stat) => (
-            <div key={stat.label} className="bg-card/80 rounded-2xl px-4 py-5 border border-card-border shadow-sm">
-              <div className={`text-2xl sm:text-3xl font-bold ${stat.color ?? "text-foreground"}`}>
-                <AnimatedCounter
-                  target={stat.value}
-                  prefix={stat.prefix}
-                  suffix={stat.suffix}
-                  duration={1.8}
-                />
+            <div key={stat.label} className="bg-card/80 rounded-2xl px-4 py-4 border border-card-border shadow-sm">
+              <div className={`text-2xl font-bold ${stat.color ?? "text-foreground"}`}>
+                <AnimatedCounter target={stat.value} suffix={stat.suffix} duration={1.8} />
               </div>
               <div className="text-xs text-muted mt-1">{stat.label}</div>
             </div>

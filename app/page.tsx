@@ -5,6 +5,7 @@ import Charities from "@/components/Charities";
 import Transparency from "@/components/Transparency";
 import TokenInfo from "@/components/TokenInfo";
 import Footer from "@/components/Footer";
+import StickyDonationBadge from "@/components/StickyDonationBadge";
 
 export default function Home() {
   return (
@@ -18,6 +19,7 @@ export default function Home() {
         <TokenInfo />
       </main>
       <Footer />
+      <StickyDonationBadge />
     </div>
   );
 }
