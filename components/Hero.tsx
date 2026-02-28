@@ -21,42 +21,44 @@ export default function Hero() {
           100% of creator fees fund humanitarian relief
         </motion.div>
 
-        {/* Dove illustration — floating */}
+        {/* ── BIG DONATION TOTAL — hero centrepiece ── */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
+          initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.1 }}
-          className="flex justify-center mb-6"
+          transition={{ duration: 0.8, delay: 0.15 }}
+          className="mb-10"
         >
-          <div className="animate-float">
-            <svg width="120" height="100" viewBox="0 0 120 100" fill="none" className="drop-shadow-md">
-              <ellipse cx="58" cy="55" rx="28" ry="18" fill="#e0f2fe" stroke="#7dd3fc" strokeWidth="1.5" />
-              <path d="M30 48 Q15 30 40 38 Q20 42 35 52Z" fill="#bae6fd" stroke="#7dd3fc" strokeWidth="1" />
-              <path d="M86 48 Q101 30 76 38 Q96 42 81 52Z" fill="#bae6fd" stroke="#7dd3fc" strokeWidth="1" />
-              <circle cx="82" cy="44" r="12" fill="#e0f2fe" stroke="#7dd3fc" strokeWidth="1.5" />
-              <circle cx="85" cy="42" r="2" fill="#0ea5e9" />
-              <circle cx="85.8" cy="41.2" r="0.6" fill="white" />
-              <path d="M92 44 L98 46 L92 48Z" fill="#f59e0b" />
-              <path d="M32 58 Q20 65 28 70 Q22 62 36 62Z" fill="#bae6fd" stroke="#7dd3fc" strokeWidth="1" />
-              <path d="M95 50 Q100 55 98 62" stroke="#10b981" strokeWidth="2" strokeLinecap="round" />
-              <ellipse cx="98" cy="54" rx="4" ry="2.5" fill="#6ee7b7" transform="rotate(30 98 54)" />
-              <ellipse cx="99" cy="59" rx="3.5" ry="2" fill="#6ee7b7" transform="rotate(-20 99 59)" />
-              <ellipse cx="97" cy="63" rx="3" ry="2" fill="#34d399" transform="rotate(10 97 63)" />
-            </svg>
+          <p className="text-sm font-medium text-muted uppercase tracking-widest mb-4">
+            Total Donated to Charities
+          </p>
+          <div className="text-7xl sm:text-8xl md:text-[9rem] font-bold leading-none tracking-tight text-foreground">
+            <AnimatedCounter target={TOTAL_DONATED} prefix="$" duration={2.2} />
+          </div>
+          <div className="flex items-center justify-center gap-2 mt-4">
+            <span className="w-2 h-2 rounded-full bg-sage pulse-dot" />
+            <span className="text-sm text-sage font-medium">Live — updated on-chain</span>
           </div>
         </motion.div>
+
+        {/* Divider */}
+        <motion.div
+          initial={{ opacity: 0, scaleX: 0 }}
+          animate={{ opacity: 1, scaleX: 1 }}
+          transition={{ duration: 0.7, delay: 0.4 }}
+          className="w-24 h-px bg-gradient-to-r from-transparent via-card-border to-transparent mx-auto mb-10"
+        />
 
         {/* Title */}
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.2 }}
-          className="text-5xl sm:text-6xl md:text-7xl font-bold tracking-tight mb-6 leading-tight"
+          transition={{ duration: 0.7, delay: 0.45 }}
+          className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight mb-5 leading-tight"
         >
           Trade with{" "}
           <span className="text-shimmer">purpose</span>
-          <br />
-          <span className="text-foreground">Fund the</span>{" "}
+          {" · "}
+          Fund the{" "}
           <span className="text-sky">front lines</span>
         </motion.h1>
 
@@ -64,20 +66,19 @@ export default function Hero() {
         <motion.p
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="text-lg sm:text-xl text-muted max-w-2xl mx-auto mb-10 leading-relaxed"
+          transition={{ duration: 0.6, delay: 0.55 }}
+          className="text-base sm:text-lg text-muted max-w-2xl mx-auto mb-10 leading-relaxed"
         >
           War Fund is a Solana token where every trade sends creator fees directly
           to humanitarian organizations helping civilians caught in conflict.
-          Finance peace — one transaction at a time.
         </motion.p>
 
         {/* CTAs */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16"
+          transition={{ duration: 0.6, delay: 0.65 }}
+          className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-14"
         >
           <a
             href="#token"
@@ -93,32 +94,11 @@ export default function Hero() {
           </a>
         </motion.div>
 
-        {/* Big donation total */}
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.65 }}
-          className="mb-10"
-        >
-          <div className="inline-block bg-gradient-to-br from-sage-light/80 to-sky-light/60 border border-sage/20 rounded-3xl px-10 py-8 shadow-sm">
-            <p className="text-sm font-medium text-muted uppercase tracking-widest mb-3">
-              Total Donated to Charities
-            </p>
-            <div className="text-6xl sm:text-7xl md:text-8xl font-bold text-foreground leading-none">
-              <AnimatedCounter target={TOTAL_DONATED} prefix="$" duration={2.2} />
-            </div>
-            <div className="flex items-center justify-center gap-2 mt-3">
-              <span className="w-2 h-2 rounded-full bg-sage pulse-dot" />
-              <span className="text-xs text-sage font-medium">Live — updated on-chain</span>
-            </div>
-          </div>
-        </motion.div>
-
         {/* Supporting stats */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.8 }}
+          transition={{ duration: 0.6, delay: 0.75 }}
           className="grid grid-cols-2 gap-4 max-w-xs mx-auto"
         >
           {[
@@ -140,7 +120,6 @@ export default function Hero() {
         <motion.div
           animate={{ y: [0, 8, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
-          className="flex flex-col items-center gap-1"
         >
           <svg className="w-5 h-5 text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
